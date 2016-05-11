@@ -1,0 +1,9 @@
+Method Definitions: 
+1  void android.widget.TextView.setText(CharSequence)
+2  void android.widget.TextView.setText(CharSequence, TextView.BufferType)
+3  void android.widget.TextView.setText(CharSequence, TextView.BufferType, boolean, int)
+4  void android.widget.TextView.sendBeforeTextChanged(CharSequence, int, int, int)
+5  void android.widget.TextView.sendOnTextChanged(CharSequence, int, int, int)
+6  void android.widget.TextView.onTextChanged(CharSequence, int, int, int)
+7  void android.widget.TextView.prepareCursorControllers()
+8  void android.widget.TextView.stopTextSelectionMode()

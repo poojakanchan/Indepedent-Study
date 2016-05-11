@@ -21,7 +21,9 @@ public class AspectjLog {
 	 static Map<Signature, Integer> signatureMap = new HashMap<Signature, Integer>();
 	 static int methodId = 1;
     public static void log( ProceedingJoinPoint pjp, String message, boolean printParamatersFlag) {
-                       int processId = android.os.Process.myPid();
+                     
+                    if(startLogging) {  
+                     int processId = android.os.Process.myPid();
                        int threadId =  android.os.Process.getThreadPriority(android.os.Process.myTid());
 
                         int methodIdCurrentProcess = 0;
@@ -38,7 +40,7 @@ public class AspectjLog {
                                 signatureMap.put(signature, methodId);
                                 System.out.println(logBuilder.toString());
  
-                                if(startLogging) {
+                                
 
                                    try {
                                       PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(methodFile, true)));
@@ -48,7 +50,7 @@ public class AspectjLog {
                                      } catch (IOException e) {
                                          e.printStackTrace();
                                       }
-                                 }
+                                 
                                 methodIdCurrentProcess = methodId;
                                 methodId++;
                         }
@@ -144,11 +146,13 @@ public class AspectjLog {
 				e.printStackTrace();
 			}
 */
+          }
 	}
 
-     public static void startLogging() {
+     public static void startLogging(String fileName) {
          startLogging = true;
 
+           System.out.println("########## ASPECTLOG FROM SYSTEM!!!");
          if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
              //handle case of no SDCARD present
               System.out.println("**************************NO SDCARD !! ************************");
@@ -168,14 +172,14 @@ public class AspectjLog {
              folder.mkdirs();
 
              //create file
-              traceFile = new File(dir, "AspectJ_call_trace.txt");
-             methodFile = new File(dir, "AspectJ_method_definitions.txt");
+              traceFile = new File(dir,fileName +   "_call_trace.txt");
+             methodFile = new File(dir, fileName + "_method_definitions.txt");
               try {
               PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(methodFile, false)));
-              out.print("methods\n");
+              out.print("Method Definitions: \n");
               out.close();
               out = new PrintWriter(new BufferedWriter(new FileWriter(traceFile, false)));
-              out.print("methods\n");
+              out.print("Call Trace: \n");
               out.close();
               }catch(IOException io) {
                 io.printStackTrace();
